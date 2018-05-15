@@ -110,7 +110,7 @@ public class MyGUI {
 						System.out.println(Person.getPersonenliste().get(i));
 
 					}
-
+					clearMask();
 					
 
 				} catch (NumberFormatException nfe) {
@@ -163,7 +163,7 @@ public class MyGUI {
 			public void widgetSelected(SelectionEvent e) {
 				
 					Person.write2json();
-					clearMask();
+					
 					
 					MessageBox mb = new MessageBox(shell,SWT.ICON_INFORMATION | SWT.OK);
 					mb.setMessage("Erfolg");
@@ -173,6 +173,16 @@ public class MyGUI {
 		});
 		btnjson.setBounds(144, 243, 75, 25);
 		btnjson.setText("2Json");
+		
+		Button btnReadfromjson = new Button(shell, SWT.NONE);
+		btnReadfromjson.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Person.readfromJSON();
+			}
+		});
+		btnReadfromjson.setBounds(144, 274, 75, 25);
+		btnReadfromjson.setText("JsonRead");
 
 	}
 

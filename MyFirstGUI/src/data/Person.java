@@ -2,9 +2,13 @@ package data;
 
 
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Reader;
 import java.io.Writer;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 import org.eclipse.swt.SWT;
@@ -12,10 +16,30 @@ import org.eclipse.swt.widgets.MessageBox;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 
 public class Person {
 
+	public static void readfromJSON() {
+		Reader reader;
+		try {
+			reader = new FileReader("C:\\temp\\output2.json");
+		
+		Gson gson = new GsonBuilder().serializeNulls().create();
+		
+		ArrayList<Person> personenread = new ArrayList<>();
+		Type listType = new TypeToken <ArrayList<Person>>(){}.getType();
+		personenread = gson.fromJson(reader,listType);
+		for (int i = 0; i < personenread.size(); i++) {
 
+			System.out.println(personenread.get(i));
+		};
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	};
+	
 	public static void write2json()  {
 		try {
 			Writer writer = new FileWriter("C:\\temp\\output2.json");
