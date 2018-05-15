@@ -22,6 +22,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.eclipse.swt.widgets.List;
 
 public class MyGUI {
 
@@ -31,6 +32,7 @@ public class MyGUI {
 	private Text adresse;
 	private Text postleitzahl;
 	private Text ort;
+	private List guiList;
 
 	/**
 	 * Launch the application.
@@ -68,7 +70,7 @@ public class MyGUI {
 		shell = new Shell();
 		shell.setBackgroundImage(null);
 		shell.setBackground(SWTResourceManager.getColor(SWT.COLOR_DARK_CYAN));
-		shell.setSize(391, 412);
+		shell.setSize(391, 470);
 		shell.setText("SWT Application");
 
 		vorname = new Text(shell, SWT.BORDER);
@@ -110,6 +112,9 @@ public class MyGUI {
 						System.out.println(Person.getPersonenliste().get(i));
 
 					}
+					
+					guiList.add(Person.getPersonenliste().toString());
+				
 					clearMask();
 					
 
@@ -183,6 +188,9 @@ public class MyGUI {
 		});
 		btnReadfromjson.setBounds(144, 274, 75, 25);
 		btnReadfromjson.setText("JsonRead");
+		
+		guiList = new List(shell, SWT.BORDER);
+		guiList.setBounds(10, 307, 355, 114);
 
 	}
 
@@ -213,5 +221,8 @@ public class MyGUI {
 
 	protected Text getOrt() {
 		return ort;
+	}
+	public List getList() {
+		return guiList;
 	}
 }
