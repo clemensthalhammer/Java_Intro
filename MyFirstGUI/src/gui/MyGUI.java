@@ -6,12 +6,6 @@ import org.eclipse.swt.widgets.Text;
 
 import data.Person;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
-import java.util.Set;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
@@ -20,8 +14,6 @@ import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.eclipse.swt.widgets.List;
 
 public class MyGUI {
@@ -78,7 +70,7 @@ public class MyGUI {
 
 		Label lblVorname = new Label(shell, SWT.NONE);
 		lblVorname.setFont(SWTResourceManager.getFont("Comic Sans MS", 9, SWT.NORMAL));
-		lblVorname.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		lblVorname.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblVorname.setBounds(45, 36, 53, 21);
 		lblVorname.setText("Vorname");
 
@@ -112,11 +104,10 @@ public class MyGUI {
 						System.out.println(Person.getPersonenliste().get(i));
 
 					}
-					
+
 					guiList.add(Person.getPersonenliste().toString());
-				
+
 					clearMask();
-					
 
 				} catch (NumberFormatException nfe) {
 					MessageBox mb = new MessageBox(shell, SWT.ICON_ERROR | SWT.OK);
@@ -132,13 +123,13 @@ public class MyGUI {
 
 		Label lblNachname = new Label(shell, SWT.NONE);
 		lblNachname.setFont(SWTResourceManager.getFont("Comic Sans MS", 9, SWT.NORMAL));
-		lblNachname.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		lblNachname.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblNachname.setBounds(34, 66, 64, 15);
 		lblNachname.setText("Nachname");
 
 		Label lblAdresse = new Label(shell, SWT.NONE);
 		lblAdresse.setFont(SWTResourceManager.getFont("Comic Sans MS", 9, SWT.NORMAL));
-		lblAdresse.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		lblAdresse.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblAdresse.setBounds(43, 96, 55, 15);
 		lblAdresse.setText("Adresse");
 
@@ -149,13 +140,13 @@ public class MyGUI {
 
 		Label lblPostleitzahl = new Label(shell, SWT.NONE);
 		lblPostleitzahl.setFont(SWTResourceManager.getFont("Comic Sans MS", 9, SWT.NORMAL));
-		lblPostleitzahl.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		lblPostleitzahl.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblPostleitzahl.setBounds(25, 129, 64, 15);
 		lblPostleitzahl.setText("Postleitzahl");
 
 		Label lblOrt = new Label(shell, SWT.NONE);
 		lblOrt.setFont(SWTResourceManager.getFont("Comic Sans MS", 9, SWT.NORMAL));
-		lblOrt.setBackground(SWTResourceManager.getColor(SWT.COLOR_TRANSPARENT));
+		lblOrt.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 		lblOrt.setBounds(43, 153, 55, 15);
 		lblOrt.setText("Ort");
 
@@ -166,31 +157,50 @@ public class MyGUI {
 		btnjson.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
-					Person.write2json();
-					
-					
-					MessageBox mb = new MessageBox(shell,SWT.ICON_INFORMATION | SWT.OK);
-					mb.setMessage("Erfolg");
-					mb.setText(Person.getPersonenliste().size()+" Einträge erfolgreich geschrieben");
-					mb.open();
+
+				Person.write2json();
+
+				MessageBox mb = new MessageBox(shell, SWT.ICON_INFORMATION | SWT.OK);
+				mb.setMessage("Erfolg");
+				mb.setText(Person.getPersonenliste().size() + " Einträge erfolgreich geschrieben");
+				mb.open();
 			}
 		});
 		btnjson.setBounds(144, 243, 75, 25);
 		btnjson.setText("2Json");
-		
+
 		Button btnReadfromjson = new Button(shell, SWT.NONE);
 		btnReadfromjson.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Person.readfromJSON();
+
+				for (int i = 0; i < Person.getPersonenliste().size(); i++) {
+
+					System.out.println(Person.getPersonenliste().get(i));
+
+					guiList.add(Person.getPersonenliste().get(i).toString());
+				}
+
 			}
 		});
 		btnReadfromjson.setBounds(144, 274, 75, 25);
 		btnReadfromjson.setText("JsonRead");
-		
+
 		guiList = new List(shell, SWT.BORDER);
 		guiList.setBounds(10, 307, 355, 114);
+
+		Button btnClear = new Button(shell, SWT.NONE);
+		btnClear.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+
+				guiList.removeAll();
+				Person.getPersonenliste().clear();
+			}
+		});
+		btnClear.setBounds(290, 274, 75, 25);
+		btnClear.setText("clear");
 
 	}
 
@@ -222,6 +232,7 @@ public class MyGUI {
 	protected Text getOrt() {
 		return ort;
 	}
+
 	public List getList() {
 		return guiList;
 	}

@@ -11,8 +11,6 @@ import java.io.Writer;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.MessageBox;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,6 +31,9 @@ public class Person {
 		for (int i = 0; i < personenread.size(); i++) {
 
 			System.out.println(personenread.get(i));
+			Person.getPersonenliste().add(personenread.get(i));
+			
+			
 		};
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
