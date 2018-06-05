@@ -20,6 +20,7 @@ public class DBTest {
 	public DBTest() throws SQLException {
 		Connection conn = DriverManager
 				.getConnection("jdbc:ucanaccess://C:/Users/clemensthalhammer/dbtest1.accdb;memory=false");
+		//pfad kann zuhause anders sein
 		Statement stmt = conn.createStatement();
 		stmt.execute("INSERT INTO address ( vorname, nachname, ort, plz )"
 				+ "VALUES ('clemens2', 'thalhammer', 'wien', 1190)");
