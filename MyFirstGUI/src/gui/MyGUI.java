@@ -6,6 +6,11 @@ import org.eclipse.swt.widgets.Text;
 
 import data.Person;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
@@ -201,6 +206,33 @@ public class MyGUI {
 		});
 		btnClear.setBounds(290, 274, 75, 25);
 		btnClear.setText("clear");
+
+		Button btnaccess = new Button(shell, SWT.NONE);
+		btnaccess.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+
+				try {
+					Connection conn;
+					conn = DriverManager.getConnection("jdbc:ucanaccess://D://dbtest.accdb;memory=false");
+
+					Statement stmt = conn.createStatement();
+					stmt.execute("INSERT INTO address ( vorname, nachname, ort, plz ) " + "VALUES (" + getVorname()
+							+ ", " + getNachname() + ", " + getOrt() + ", " + getPostleitzahl() + ")");
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					
+					MessageBox mb = new MessageBox(shell, SWT.ICON_ERROR | SWT.OK);
+					mb.setMessage("Fehler: " + e);
+					mb.setText("Fehler");
+					mb.open();
+					
+				}
+			}
+		});
+		btnaccess.setBounds(10, 274, 75, 25);
+		btnaccess.setText("2Access");
 
 	}
 

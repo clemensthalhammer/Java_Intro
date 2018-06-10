@@ -1,7 +1,5 @@
 package data;
 
-
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -9,8 +7,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Type;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
-
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -22,36 +23,37 @@ public class Person {
 		Reader reader;
 		try {
 			reader = new FileReader("C:\\temp\\output2.json");
-		
-		Gson gson = new GsonBuilder().serializeNulls().create();
-		
-		ArrayList<Person> personenread = new ArrayList<>();
-		Type listType = new TypeToken <ArrayList<Person>>(){}.getType();
-		personenread = gson.fromJson(reader,listType);
-		for (int i = 0; i < personenread.size(); i++) {
 
-			System.out.println(personenread.get(i));
-			Person.getPersonenliste().add(personenread.get(i));
-			
-			
-		};
+			Gson gson = new GsonBuilder().serializeNulls().create();
+
+			ArrayList<Person> personenread = new ArrayList<>();
+			Type listType = new TypeToken<ArrayList<Person>>() {
+			}.getType();
+			personenread = gson.fromJson(reader, listType);
+			for (int i = 0; i < personenread.size(); i++) {
+
+				System.out.println(personenread.get(i));
+				Person.getPersonenliste().add(personenread.get(i));
+
+			}
+			;
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	};
-	
-	public static void write2json()  {
+
+	public static void write2json() {
 		try {
 			Writer writer = new FileWriter("C:\\temp\\output2.json");
 			Gson gson = new GsonBuilder().serializeNulls().create();
 			gson.toJson(Person.getPersonenliste(), writer);
-			
+
 			writer.close();
 
-	} catch (IOException e1) {
-		e1.printStackTrace();
-	}
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 
 	}
 
@@ -110,4 +112,5 @@ public class Person {
 	public String toString() {
 		return getVorname() + "\n" + getNachname() + "\n" + getAdresse() + "\n" + getPostleitzahl() + "\n" + getOrt();
 	}
+
 }
